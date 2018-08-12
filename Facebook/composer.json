@@ -1,0 +1,27 @@
+{
+    "name": "oauth2middleware/facebook",
+    "description": "Facebook OAuth2 security middleware for routes.",
+    "type": "project",
+    "require": {
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "OAuth2Middleware\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OAuth2Middleware\\Facebook\\FacebookServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Andrew Viteri",
+            "email": "aryn.viteri@gmail.com"
+        }
+    ]
+}
