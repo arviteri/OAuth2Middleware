@@ -33,6 +33,11 @@ class FacebookAuth
             )
         );
 
+        // Check if token was provided in request.
+        if (!fbUserAccessToken) {
+            throw new Exception("No access token provided.");  
+        }
+
         try {
             $response = $guzzleClient->request('GET', $fbUri, $fbQueryData);
             $responseCode = $response->getStatusCode();
@@ -40,7 +45,7 @@ class FacebookAuth
 
             //Guzzle should handle the condition below, but using for precaution.
             if ($responseCode != 200) {
-                throw new Exception('An error occured during authentication.');
+                throw new Exception('Invalid token');
             }
 
             $appId = getenv('FB_APP_ID');
@@ -48,14 +53,14 @@ class FacebookAuth
 
             //Verify the token against application registered with Facebook.
             if (strcmp($appId, $responseAppId) !== 0) {
-                throw new Exception('An error occured during authentication.');
+                throw new Exception('Invalid token.');
             }
 
 
         } catch (Exception $e) {
             $responseData = json_encode(['error' => 'an error occured during authentication.']);
             $responseJSON = new Response($responseData, 401);
-            $responseJSON->header('WWW-Authenticate', 'Invalid token');
+            $responseJSON->header('WWW-Authenticate', $e->getMessage());
             $responseJSON->header('Content-type', 'application/json');
             return $responseJSON;
         }
