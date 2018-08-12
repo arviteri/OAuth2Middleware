@@ -2,7 +2,7 @@
     "name": "oauth2middleware/facebook",
     "description": "Facebook OAuth2 security middleware for routes.",
     "type": "library",
-    "version": "0.1",
+    "version": "1.0.0",
     "require": {
         "php": ">=5.5",
         "guzzlehttp/guzzle": "^6.3"
