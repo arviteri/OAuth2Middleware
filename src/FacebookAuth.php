@@ -4,6 +4,7 @@ namespace OAuth2Middleware\Facebook;
 
 use \Illuminate\Http\Request;
 use \Illuminate\Http\Response;
+use \Illuminate\Auth\AuthenticationException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Closure;
@@ -23,9 +24,10 @@ class FacebookAuth
         $guzzleClient = new Client();
 
         // Facebook data for verification.
+        $fbAppId = getenv('FB_APP_ID');
+        $fbAppToken = getenv('FB_APP_TOKEN');
         $fbUri = 'https://graph.facebook.com/debug_token';
         $fbUserAccessToken = $request->bearerToken();
-        $fbAppToken = getenv('FB_APP_TOKEN');
         $fbQueryData = array(
             'query' => array(
                 'input_token'   => $fbUserAccessToken,
@@ -33,9 +35,19 @@ class FacebookAuth
             )
         );
 
+        // Check for .env FB_APP_ID
+        if (!fbAppId) {
+            throw new AuthenticationException('no app id provided.')
+        }
+
+        // Check for .env FB_APP_TOKEN
+        if (!fbAppToken) {
+            throw new AuthenticationException('no app token provided.')
+        }
+
         // Check if token was provided in request.
         if (!fbUserAccessToken) {
-            throw new Exception("No access token provided.");  
+            throw new AuthenticationException("no access token provided.");  
         }
 
         try {
@@ -45,20 +57,19 @@ class FacebookAuth
 
             //Guzzle should handle the condition below, but using for precaution.
             if ($responseCode != 200) {
-                throw new Exception('Invalid token');
+                throw new AuthenticationException('invalid token');
             }
 
-            $appId = getenv('FB_APP_ID');
             $responseAppId = $responseData['data']['app_id'];
 
             //Verify the token against application registered with Facebook.
-            if (strcmp($appId, $responseAppId) !== 0) {
-                throw new Exception('Invalid token.');
+            if (strcmp($fbAppId, $responseAppId) !== 0) {
+                throw new AuthenticationException('invalid token.');
             }
 
 
         } catch (Exception $e) {
-            $responseData = json_encode(['error' => 'an error occured during authentication.']);
+            $responseData = json_encode(['error' => $e->getMessage() ]);
             $responseJSON = new Response($responseData, 401);
             $responseJSON->header('WWW-Authenticate', $e->getMessage());
             $responseJSON->header('Content-type', 'application/json');
