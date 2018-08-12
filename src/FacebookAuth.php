@@ -36,17 +36,17 @@ class FacebookAuth
         );
 
         // Check for .env FB_APP_ID
-        if (!fbAppId) {
-            throw new AuthenticationException('no app id provided.')
+        if (!$fbAppId) {
+            throw new AuthenticationException('no app id provided.');
         }
 
         // Check for .env FB_APP_TOKEN
-        if (!fbAppToken) {
-            throw new AuthenticationException('no app token provided.')
+        if (!$fbAppToken) {
+            throw new AuthenticationException('no app token provided.');
         }
 
         // Check if token was provided in request.
-        if (!fbUserAccessToken) {
+        if (!$fbUserAccessToken) {
             throw new AuthenticationException("no access token provided.");  
         }
 
