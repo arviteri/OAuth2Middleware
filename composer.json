@@ -1,6 +1,6 @@
 {
-    "name": "oauth2middleware",
-    "description": "OAuth2 security middleware for routes.",
+    "name": "oauth2middleware/facebook",
+    "description": "Facebook OAuth2 security middleware for routes.",
     "type": "library",
     "require": {
         "php": ">=5.5",
@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OAuth2Middleware\\Facebook\\": "Facebook/src/"
+            "OAuth2Middleware\\Facebook\\": "src/"
         }
     },
     "extra": {
