@@ -1,6 +1,7 @@
 {
     "name": "oauth2middleware/facebook",
     "description": "Facebook OAuth2 security middleware for routes.",
+    "license": "MIT"
     "type": "library",
     "require": {
         "php": ">=5.5",
