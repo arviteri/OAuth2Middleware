@@ -2,7 +2,7 @@
     "name": "oauth2middleware/facebook",
     "description": "Facebook OAuth2 security middleware for routes.",
     "license": "MIT",
-    "type": "library",
+    "type": "project",
     "require": {
         "php": ">=5.5",
         "guzzlehttp/guzzle": "^6.3"
