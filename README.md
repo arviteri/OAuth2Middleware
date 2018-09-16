@@ -1,7 +1,7 @@
 # OAuth2Middleware-Facebook
 Laravel package for securing API's with Facebook's OAuth2 service.<br />
 
-OAuth2Middleware-Facebook works by verifiying that each request sent to your server has an authorization token in the request `Authentication` header. After verifying that there is an authorization token available, it validates it against Facebook's Graph API. This validation has two steps; verifying that the token given belongs to Facebook, and verifying that the token belongs to YOUR Facebook application.
+OAuth2Middleware-Facebook works by verifying that each request sent to your server has an authorization token in the request `Authentication` header. After verifying that there is an authorization token available, it validates it against Facebook's Graph API. This validation has two steps; verifying that the token given belongs to Facebook, and verifying that the token belongs to YOUR Facebook application.
 
 You will need to setup an application in Facebook as well as retrieve a non-expiring OAuth2 application token. (See configuration)
 
